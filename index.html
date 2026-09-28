@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Aashu AI 🚀</title>
+<meta name="description"
+content="Aashu AI - Free AI study assistant for students. Ask questions and get simple step-by-step answers.">
+
+<meta name="keywords"
+content="Aashu AI, AI study assistant, AI for students, JEE AI, study AI">
+
+<meta name="robots" content="index, follow">
+<meta name="author" content="Aashu AI">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #07111f, #102b4a);
+            color: white;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: auto;
+            padding-top: 70px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #20d9ff;
+            font-size: 42px;
+        }
+
+        .box {
+            display: flex;
+            gap: 10px;
+        }
+
+        input {
+            flex: 1;
+            padding: 18px;
+            border-radius: 12px;
+            border: none;
+            font-size: 17px;
+        }
+
+        button {
+            padding: 18px 28px;
+            border: none;
+            border-radius: 12px;
+            background: #00c8ff;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        #answer {
+            margin-top: 25px;
+            padding: 25px;
+            border-radius: 15px;
+            background: rgba(255,255,255,0.12);
+            min-height: 50px;
+            white-space: pre-wrap;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🤖 Aashu AI 🚀</h1>
+
+    <div class="box">
+        <input
+            id="question"
+            placeholder="Apna question likho..."
+            onkeydown="if(event.key === 'Enter') ask()"
+        >
+
+        <button onclick="ask()">Ask</button>
+    </div>
+
+    <div id="answer">
+        Aashu AI ready hai... 🚀
+    </div>
+
+</div>
+
+<script>
+async function ask() {
+
+    const question = document.getElementById("question").value.trim();
+    const answer = document.getElementById("answer");
+
+    if (!question) {
+        answer.innerText = "Pehle question likho 😄";
+        return;
+    }
+
+    answer.innerText = "Aashu AI soch raha hai... 🤔";
+
+    try {
+
+        const response = await fetch("http://127.0.0.1:3000/ask-ai", {
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+                question: question
+            })
+        });
+
+        const data = await response.json();
+
+        answer.innerText = data.answer;
+
+    } catch (error) {
+
+        console.error(error);
+
+        answer.innerText = "Server se connection nahi ho pa raha 😕";
+    }
+}
+</script>
+
+</body>
+</html>
